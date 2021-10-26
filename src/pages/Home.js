@@ -34,7 +34,8 @@ class Home extends React.Component {
     const categorieObj = categoriesList
       .filter((categorie) => categorie.name.includes(searchValue));
     console.log(categorieObj);
-    const returnedApi = await getProductsFromCategoryAndQuery(categorieObj.id, searchValue);
+    const returnedApi = await
+    getProductsFromCategoryAndQuery(categorieObj.id, searchValue);
     this.setState({ responseApi: returnedApi.results });
   }
 
