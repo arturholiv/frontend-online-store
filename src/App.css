@@ -40,3 +40,12 @@
     transform: rotate(360deg);
   }
 }
+
+.categories-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.categories-list label {
+  padding: 5px;
+}

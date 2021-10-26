@@ -10,6 +10,7 @@ class Home extends React.Component {
     this.getCategoriesList = this.getCategoriesList.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getProducts = this.getProducts.bind(this);
+    this.getNameAndId = this.getNameAndId.bind(this);
 
     this.state = {
       categoriesList: [],
@@ -42,6 +43,13 @@ class Home extends React.Component {
   async getCategoriesList() {
     const list = await getCategories();
     this.setState({ categoriesList: list });
+  }
+
+  async getNameAndId({ target }) {
+    const { id, value } = target;
+    const returned = await
+    getProductsFromCategoryAndQuery(id, value);
+    this.setState({ responseApi: returned.results });
   }
 
   render() {
@@ -77,12 +85,22 @@ class Home extends React.Component {
           />
         </Link>
         <section>
-          <ul>
+          <div className="categories-list">
             { categoriesList
               .map((categories) => (
-                <li data-testid="category" key={ categories.id }>{ categories.name }</li>
+                <label key={ categories.id } htmlFor={ categories.id }>
+                  <input
+                    type="radio"
+                    id={ categories.id }
+                    name="category"
+                    onClick={ this.getNameAndId }
+                    value={ categories.name }
+                    data-testid="category"
+                  />
+                  { categories.name }
+                </label>
               )) }
-          </ul>
+          </div>
         </section>
         <main>
           {responseApi.length > 0
