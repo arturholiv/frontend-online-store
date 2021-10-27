@@ -6,9 +6,9 @@ class Card extends React.Component {
     const { title, price, thumbnail } = this.props;
     return (
       <div data-testid="product">
-        <h4>{ title }</h4>
+        <h4>{title}</h4>
         <img src={ thumbnail } alt={ title } />
-        <p>{ price }</p>
+        <p>{price}</p>
       </div>
     );
   }
