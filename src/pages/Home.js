@@ -86,7 +86,7 @@ class Home extends React.Component {
         </Link>
         <section>
           <div className="categories-list">
-            { categoriesList
+            {categoriesList
               .map((categories) => (
                 <label key={ categories.id } htmlFor={ categories.id }>
                   <input
@@ -97,21 +97,28 @@ class Home extends React.Component {
                     value={ categories.name }
                     data-testid="category"
                   />
-                  { categories.name }
+                  {categories.name}
                 </label>
-              )) }
+              ))}
           </div>
         </section>
         <main>
           {responseApi.length > 0
             ? responseApi
-              .map((response) => (<Card
-                key={ response.id }
-                title={ response.title }
-                thumbnail={ response.thumbnail }
-                price={ response.price }
-              />))
-            : <span>Nenhum produto foi encontrado</span> }
+              .map((response) => (
+                <Link
+                  to={ `/productDetails/${response.id}` }
+                  data-testid="product-detail-link"
+                  key={ response.id }
+                >
+                  <Card
+                    title={ response.title }
+                    thumbnail={ response.thumbnail }
+                    price={ response.price }
+                  />
+                </Link>))
+
+            : <span>Nenhum produto foi encontrado</span>}
         </main>
       </div>
     );
