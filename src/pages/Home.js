@@ -11,16 +11,35 @@ class Home extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.getProducts = this.getProducts.bind(this);
     this.getNameAndId = this.getNameAndId.bind(this);
+    this.handleAddToCartButton = this.handleAddToCartButton.bind(this);
 
     this.state = {
       categoriesList: [],
       searchValue: '',
       responseApi: [],
+      cartProductsList: [],
     };
   }
 
   componentDidMount() {
     this.getCategoriesList();
+  }
+
+  handleAddToCartButton({ title, thumbnail, price, id }) {
+    // const { cartProductsList } = this.state;
+    const productObject = { title, thumbnail, price, quantity: 1, id };
+    let cartList = JSON.parse(localStorage.getItem('cartList') || '[]');
+    if (cartList.length === 0) {
+      cartList = [
+        productObject,
+      ];
+    } else {
+      cartList.push(productObject);
+    }
+    localStorage.setItem('cartList', JSON.stringify(cartList));
+
+    this.setState(({ cartProductsList }) => (
+      { cartProductsList: [...cartProductsList, productObject] }));
   }
 
   handleChange({ target }) {
@@ -101,18 +120,27 @@ class Home extends React.Component {
         </section>
         <main>
           {responseApi.length > 0 ? (
-            responseApi.map((response) => (
-              <Link
-                to={ `/productDetails/${response.id}` }
-                data-testid="product-detail-link"
-                key={ response.id }
-              >
-                <Card
-                  title={ response.title }
-                  thumbnail={ response.thumbnail }
-                  price={ response.price }
-                />
-              </Link>
+            responseApi.map((product) => (
+              <div key={ product.id }>
+                <Link
+                  to={ `/productDetails/${product.id}` }
+                  data-testid="product-detail-link"
+                >
+                  <Card
+                    title={ product.title }
+                    thumbnail={ product.thumbnail }
+                    price={ product.price }
+                  />
+                </Link>
+                <button
+                  type="button"
+                  onClick={ (event) => this.handleAddToCartButton(product, event) }
+                  data-testid="product-add-to-cart"
+                  id={ product.title }
+                >
+                  Add to Cart
+                </button>
+              </div>
             ))
           ) : (
             <span>Nenhum produto foi encontrado</span>
