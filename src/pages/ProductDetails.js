@@ -31,10 +31,10 @@ class ProductDetails extends React.Component {
     const { productObject, productDescription, productDescriptionValue } = this.state;
     return (
       <div>
-        <h4 data-testid="product-detail-name">{ productObject.title }</h4>
+        <h4 data-testid="product-detail-name">{productObject.title}</h4>
         <img src={ productObject.thumbnail } alt={ productObject.title } />
-        <p>{ productObject.price }</p>
-        <p>{ `${productDescription}: ${productDescriptionValue}` }</p>
+        <p>{productObject.price}</p>
+        <p>{`${productDescription}: ${productDescriptionValue}`}</p>
       </div>
     );
   }
@@ -43,7 +43,8 @@ class ProductDetails extends React.Component {
 ProductDetails.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.string.isRequired }),
+      id: PropTypes.string.isRequired,
+    }),
   }).isRequired,
 };
 

@@ -34,7 +34,6 @@ class Home extends React.Component {
     const { searchValue, categoriesList } = this.state;
     const categorieObj = categoriesList
       .filter((categorie) => categorie.name.includes(searchValue));
-    console.log(categorieObj);
     const returnedApi = await
     getProductsFromCategoryAndQuery(categorieObj.id, searchValue);
     this.setState({ responseApi: returnedApi.results });
@@ -47,8 +46,7 @@ class Home extends React.Component {
 
   async getNameAndId({ target }) {
     const { id, value } = target;
-    const returned = await
-    getProductsFromCategoryAndQuery(id, value);
+    const returned = await getProductsFromCategoryAndQuery(id, value);
     this.setState({ responseApi: returned.results });
   }
 
@@ -86,39 +84,39 @@ class Home extends React.Component {
         </Link>
         <section>
           <div className="categories-list">
-            {categoriesList
-              .map((categories) => (
-                <label key={ categories.id } htmlFor={ categories.id }>
-                  <input
-                    type="radio"
-                    id={ categories.id }
-                    name="category"
-                    onClick={ this.getNameAndId }
-                    value={ categories.name }
-                    data-testid="category"
-                  />
-                  {categories.name}
-                </label>
-              ))}
+            {categoriesList.map((categories) => (
+              <label key={ categories.id } htmlFor={ categories.id }>
+                <input
+                  type="radio"
+                  id={ categories.id }
+                  name="category"
+                  onClick={ this.getNameAndId }
+                  value={ categories.name }
+                  data-testid="category"
+                />
+                {categories.name}
+              </label>
+            ))}
           </div>
         </section>
         <main>
-          {responseApi.length > 0
-            ? responseApi
-              .map((response) => (
-                <Link
-                  to={ `/productDetails/${response.id}` }
-                  data-testid="product-detail-link"
-                  key={ response.id }
-                >
-                  <Card
-                    title={ response.title }
-                    thumbnail={ response.thumbnail }
-                    price={ response.price }
-                  />
-                </Link>))
-
-            : <span>Nenhum produto foi encontrado</span>}
+          {responseApi.length > 0 ? (
+            responseApi.map((response) => (
+              <Link
+                to={ `/productDetails/${response.id}` }
+                data-testid="product-detail-link"
+                key={ response.id }
+              >
+                <Card
+                  title={ response.title }
+                  thumbnail={ response.thumbnail }
+                  price={ response.price }
+                />
+              </Link>
+            ))
+          ) : (
+            <span>Nenhum produto foi encontrado</span>
+          )}
         </main>
       </div>
     );
