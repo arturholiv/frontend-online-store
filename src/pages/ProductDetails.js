@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -12,16 +13,35 @@ class ProductDetails extends React.Component {
       inputRadio: '',
       textArea: '',
       listOfRatings: [],
+      cartProductsList: [],
     };
     this.getProductDetails = this.getProductDetails.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.getRatings = this.getRatings.bind(this);
+    this.handleAddToCartButton = this.handleAddToCartButton.bind(this);
   }
 
   componentDidMount() {
     this.getProductDetails();
     this.getRatings();
+  }
+
+  handleAddToCartButton({ title, thumbnail, price, id }) {
+    // const { cartProductsList } = this.state;
+    const productObject = { title, thumbnail, price, quantity: 1, id };
+    let cartList = JSON.parse(localStorage.getItem('cartList') || '[]');
+    if (cartList.length === 0) {
+      cartList = [
+        productObject,
+      ];
+    } else {
+      cartList.push(productObject);
+    }
+    localStorage.setItem('cartList', JSON.stringify(cartList));
+
+    this.setState(({ cartProductsList }) => (
+      { cartProductsList: [...cartProductsList, productObject] }));
   }
 
   handleChange({ target: { name, value } }) {
@@ -75,6 +95,11 @@ class ProductDetails extends React.Component {
     });
   }
 
+  saveItem = (productObject) => {
+    const item = { title: productObject.title };
+    localStorage.setItem('cart', JSON.stringify(item));
+  }
+
   render() {
     const {
       productObject,
@@ -90,6 +115,20 @@ class ProductDetails extends React.Component {
         <img src={ productObject.thumbnail } alt={ productObject.title } />
         <p>{productObject.price}</p>
         <p>{`${productDescription}: ${productDescriptionValue}`}</p>
+        <button
+          type="button"
+          onClick={ (event) => this.handleAddToCartButton(productObject, event) }
+          data-testid="product-detail-add-to-cart"
+          id={ productObject.title }
+        >
+          Add to Cart
+        </button>
+        <Link to="/shoppingCart" data-testid="shopping-cart-button">
+          <img
+            src="https://img.icons8.com/ios-glyphs/30/000000/shopping-cart--v1.png"
+            alt="cart"
+          />
+        </Link>
         <fieldset>
           <h3>Avaliações</h3>
           <form>
