@@ -5,7 +5,7 @@ class Card extends React.Component {
   render() {
     const { title, price, thumbnail } = this.props;
     return (
-      <div data-testid="product">
+      <div data-testid="product" className="cards">
         <h4>{title}</h4>
         <img src={ thumbnail } alt={ title } />
         <p>{price}</p>

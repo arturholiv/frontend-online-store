@@ -110,7 +110,7 @@ class ProductDetails extends React.Component {
       listOfRatings,
     } = this.state;
     return (
-      <div>
+      <div className="pages">
         <h4 data-testid="product-detail-name">{productObject.title}</h4>
         <img src={ productObject.thumbnail } alt={ productObject.title } />
         <p>{productObject.price}</p>
