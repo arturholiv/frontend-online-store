@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
@@ -11,35 +12,17 @@ class Home extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.getProducts = this.getProducts.bind(this);
     this.getNameAndId = this.getNameAndId.bind(this);
-    this.handleAddToCartButton = this.handleAddToCartButton.bind(this);
 
     this.state = {
       categoriesList: [],
       searchValue: '',
       responseApi: [],
-      cartProductsList: [],
+      // cartProductsList: [],
     };
   }
 
   componentDidMount() {
     this.getCategoriesList();
-  }
-
-  handleAddToCartButton({ title, thumbnail, price, id }) {
-    // const { cartProductsList } = this.state;
-    const productObject = { title, thumbnail, price, quantity: 1, id };
-    let cartList = JSON.parse(localStorage.getItem('cartList') || '[]');
-    if (cartList.length === 0) {
-      cartList = [
-        productObject,
-      ];
-    } else {
-      cartList.push(productObject);
-    }
-    localStorage.setItem('cartList', JSON.stringify(cartList));
-
-    this.setState(({ cartProductsList }) => (
-      { cartProductsList: [...cartProductsList, productObject] }));
   }
 
   handleChange({ target }) {
@@ -59,8 +42,12 @@ class Home extends React.Component {
   }
 
   async getCategoriesList() {
-    const list = await getCategories();
-    this.setState({ categoriesList: list });
+    try {
+      const list = await getCategories();
+      return this.setState({ categoriesList: list });
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
   async getNameAndId({ target }) {
@@ -70,6 +57,7 @@ class Home extends React.Component {
   }
 
   render() {
+    const { handleAddToCartButton } = this.props;
     const { categoriesList, searchValue, responseApi } = this.state;
     return (
       <div className="pages">
@@ -140,7 +128,7 @@ class Home extends React.Component {
                   </Link>
                   <button
                     type="button"
-                    onClick={ (event) => this.handleAddToCartButton(product, event) }
+                    onClick={ (event) => handleAddToCartButton(product, event) }
                     data-testid="product-add-to-cart"
                     id={ product.title }
                   >
@@ -158,5 +146,9 @@ class Home extends React.Component {
     );
   }
 }
+
+Home.propTypes = {
+  handleAddToCartButton: PropTypes.func.isRequired,
+};
 
 export default Home;
