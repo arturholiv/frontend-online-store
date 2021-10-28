@@ -4,12 +4,12 @@ class ShoppingCart extends React.Component {
   render() {
     const cartList = JSON.parse(localStorage.getItem('cartList') || '[]');
     return (
-      <div>
+      <div className="pages">
         {
           cartList.length > 0 ? (
             cartList.map((product) => (
               <div key={ product.title }>
-                <div>
+                <div className="cards">
                   <h4 data-testid="shopping-cart-product-name">{product.title}</h4>
                   <img src={ product.thumbnail } alt={ product.title } />
                   <p>{product.price}</p>

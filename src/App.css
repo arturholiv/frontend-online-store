@@ -1,50 +1,108 @@
-.App {
+:root {
+
+  --verde-escuro: rgb(3, 107, 82);
+
+  --verde-claro: rgb(47, 193, 140);
+
+  --roxo-escuro: rgb(65, 25, 127);
+
+  --roxo-claro: rgb(137, 88, 163);
+
+  --azul-claro: rgb(0, 213, 226);
+
+  --azul-escuro: rgb(0, 109, 251);
+
+  --cinza-claro: rgb(225, 229, 235);
+
+  --cinza1: rgb(170, 170, 170);
+
+  --cinza2: rgb(73, 73, 73);
+
+  --cinza3: rgb(30, 31, 36);
+
+  --cinza4: rgb(26, 27, 28);
+}
+
+.pages {
+  background-color: var(--cinza1);
+}
+
+.home {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.cards {
+  align-items: center;
+  background-color: var(--cinza-claro);
+  border-radius: 10px;
+  border-style: outset;
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  margin: 25px;
+  max-width: 250px;
+  padding: 30px;
+}
+
+.input-and-button-search {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.input-and-button-search input {
+  border-radius: 9999em;
+  font-size: 1.5em;
+  padding: 3px;
 }
 
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-
+.product-card button {
+  background-color: var(--azul-escuro);
+  border-radius: 10px;
+  color: var(--cinza-claro);
+  margin-left: 140px;
+  padding: 15px;
 }
 
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
+.go-to-cart-button {
+  border: 1px solid var(--cinza-claro);
+  margin-left: 96%;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.go-to-cart-button:hover {
+  background-color: var(--azul-claro);
+}
+
+.listedProducts {
   display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
+  flex-wrap: wrap;
   justify-content: center;
-  min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.listedProducts img {
+  height: auto;
+  width: 150px;
 }
 
-@keyframes App-logo-spin {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.input-and-button-search button {
+  border-radius: 40%;
+  font-size: 1.5em;
+  margin-left: 15px;
+  padding: 5px;
 }
 
-.categories-list {
+.categories-list div {
+  background-color: var(--cinza-claro);
+  border-radius: 10px;
+  border-style: outset;
   display: flex;
   flex-direction: column;
-  margin-left: 5px;
+  margin: 15px;
+  width: 250px;
 }
 
 .categories-list label {

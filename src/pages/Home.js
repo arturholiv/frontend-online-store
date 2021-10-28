@@ -72,81 +72,89 @@ class Home extends React.Component {
   render() {
     const { categoriesList, searchValue, responseApi } = this.state;
     return (
-      <div>
+      <div className="pages">
         <h4 data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </h4>
-        <label htmlFor="input-search">
-          <input
-            data-testid="query-input"
-            type="text"
-            id="input-search"
-            value={ searchValue }
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button
-          type="button"
-          onClick={ this.getProducts }
-          data-testid="query-button"
-        >
-          <img
-            src="https://img.icons8.com/material-outlined/24/000000/search--v1.png"
-            alt="search-button"
-          />
-        </button>
-        <Link to="/shoppingCart" data-testid="shopping-cart-button">
-          <img
-            src="https://img.icons8.com/ios-glyphs/30/000000/shopping-cart--v1.png"
-            alt="cart"
-          />
-        </Link>
-        <section>
-          <div className="categories-list">
-            {categoriesList.map((categories) => (
-              <label key={ categories.id } htmlFor={ categories.id }>
-                <input
-                  type="radio"
-                  id={ categories.id }
-                  name="category"
-                  onClick={ this.getNameAndId }
-                  value={ categories.name }
-                  data-testid="category"
-                />
-                {categories.name}
-              </label>
-            ))}
-          </div>
-        </section>
-        <main>
-          {responseApi.length > 0 ? (
-            responseApi.map((product) => (
-              <div key={ product.id }>
-                <Link
-                  to={ `/productDetails/${product.id}` }
-                  data-testid="product-detail-link"
-                >
-                  <Card
-                    title={ product.title }
-                    thumbnail={ product.thumbnail }
-                    price={ product.price }
+        <div className="input-and-button-search">
+          <label htmlFor="input-search">
+            <input
+              data-testid="query-input"
+              type="text"
+              id="input-search"
+              placeholder="Pesquise seu produto"
+              value={ searchValue }
+              onChange={ this.handleChange }
+            />
+          </label>
+          <button
+            type="button"
+            onClick={ this.getProducts }
+            data-testid="query-button"
+          >
+            <img
+              src="https://img.icons8.com/material-outlined/24/000000/search--v1.png"
+              alt="search-button"
+            />
+          </button>
+        </div>
+        <div className="go-to-cart-button">
+          <Link to="/shoppingCart" data-testid="shopping-cart-button">
+            <img
+              src="https://img.icons8.com/ios-glyphs/30/000000/shopping-cart--v1.png"
+              alt="cart"
+            />
+          </Link>
+        </div>
+        <div className="home">
+          <section className="categories-list">
+            <div>
+              {categoriesList.map((categories) => (
+                <label key={ categories.id } htmlFor={ categories.id }>
+                  <input
+                    type="radio"
+                    id={ categories.id }
+                    name="category"
+                    onClick={ this.getNameAndId }
+                    value={ categories.name }
+                    data-testid="category"
                   />
-                </Link>
-                <button
-                  type="button"
-                  onClick={ (event) => this.handleAddToCartButton(product, event) }
-                  data-testid="product-add-to-cart"
-                  id={ product.title }
-                >
-                  Add to Cart
-                </button>
-              </div>
-            ))
-          ) : (
-            <span>Nenhum produto foi encontrado</span>
-          )}
-        </main>
+                  {categories.name}
+                </label>
+              ))}
+            </div>
+          </section>
+          <main className="listedProducts">
+            {responseApi.length > 0 ? (
+              responseApi.map((product) => (
+                <div key={ product.id } className="product-card">
+                  <Link
+                    to={ `/productDetails/${product.id}` }
+                    data-testid="product-detail-link"
+                  >
+                    <Card
+                      title={ product.title }
+                      thumbnail={ product.thumbnail }
+                      price={ product.price }
+                    />
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={ (event) => this.handleAddToCartButton(product, event) }
+                    data-testid="product-add-to-cart"
+                    id={ product.title }
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              ))
+            ) : (
+              <h1>Nenhum produto foi encontrado</h1>
+            )}
+          </main>
+        </div>
       </div>
+
     );
   }
 }
